@@ -1,0 +1,145 @@
+<template>
+    <lightning-card title={name}>
+        <lightning-button slot="actions" label="Issue" variant="brand" onclick={issueBook} disabled={mode1} class="slds-m-right_x-small">
+        </lightning-button>
+        <lightning-button slot="actions" label="Add Book" variant="brand" onclick={addBook} class="slds-m-right_x-small"></lightning-button>
+        
+        <template if:true={comp1}>
+            <div class="slds-modal slds-fade-in-open slds-backdrop">  
+                <div class="slds-modal__container">
+                  <div class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Book Copies for {name}</h2>
+                        <lightning-input label="Enter number of Book Copies: " value={newBooks} type="number" maxlength=2 onchange={newBookCopies}></lightning-input>
+                        <div class="slds-modal__footer"> 
+                            <lightning-button variant="brand" label="Cancel" onclick={closePopUp}></lightning-button>
+                            <lightning-button variant="brand" class="slds-m-left_x-small" label="Add"
+                             type="submit" onclick={closePopUp} disabled={disabled}></lightning-button>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </template>
+   
+        <template if:true={openModel}>
+        <div class="slds-modal slds-fade-in-open slds-backdrop">  
+            <div class="slds-modal__container">
+              <div class="slds-modal__header">
+                  <lightning-input label="Reader Name" 
+                        value={readerSearch}
+                        type="search"
+                        onchange={findReader}></lightning-input>
+                       
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-top_small">
+                            <thead>
+                               <tr class="slds-line-height_reset">
+                                  <th class="" scope="col">
+                                     <div class="slds-truncate" title="Reader Name">Reader Name</div>
+                                  </th>
+                                  <th class="" scope="col">
+                                     <div class="slds-truncate" title="Aadhar Card Number">Aadhar Card Number</div>
+                                  </th>
+                                  <th class="" scope="col">
+                                    <div class="slds-truncate" title="Contact Number">Contact Number</div>
+                                 </th>
+                               </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={readerList} for:item="rObj">
+                                    <tr class="slds-hint-parent" key={rObj.Id}>
+                                       <td>
+                                          <div class="slds-truncate">
+                                            <lightning-input value={rObj.Name} onclick={selectReader}
+                                            data-row={rObj.Id} data-name={rObj.Name} read-only=true></lightning-input> 
+                                            </div>
+                                       </td>
+                                       <td>
+                                        <div class="slds-truncate">
+                                            <lightning-input  value={rObj.Aadhar_Number__c} read-only=true></lightning-input>
+                                            </div>
+                                     </td>
+                                     <td>
+                                        <div class="slds-truncate">
+                                            <lightning-input  value={rObj.Mobile_Number__c} read-only=true></lightning-input>
+                                            </div>
+                                     </td>
+                                    </tr>
+                                 </template>
+                            </tbody>
+                            </table>
+
+                        </div>
+                    <div class="slds-modal__footer">  
+                        <lightning-button variant="brand" label="Cancel" onclick={handleCancel}></lightning-button>
+                        <lightning-button variant="brand" class="slds-m-left_x-small" label="Issue"
+                         type="submit" onclick={handleSubmit} disabled={disabled}></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </template >
+        <div class="slds-form_horizontal slds-form slds-grid slds-wrap">
+           <lightning-input label="Number of Available Books" value={totalBooks} read-only="true" class="slds-size_1-of-3"></lightning-input>
+           <lightning-input label="Number of Issued Books" value={issuedBooks} read-only="true" class="slds-size_1-of-3"></lightning-input>
+           <lightning-input label="ISBN" value={isbn} read-only="true" class="slds-size_1-of-3"></lightning-input>
+         </div>
+         <template if:true={item}>
+            <lightning-card title="Book Details">
+                <table class="slds-table  slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="slds-size_1-of-5" scope="col">Reader Name</th>
+                            <th class="slds-size_1-of-5" scope="col">Book Copy</th>
+                            <th class="slds-size_1-of-5" scope="col">From</th>
+                            <th class="slds-size_1-of-5" scope="col">To</th>
+                            <th class="slds-size_1-of-5" scope="col">Actions</th>
+                        </tr>
+                    </thead>    
+                    <tbody>
+                        <template for:each={item} for:item="item2">
+                            <tr key={item2.Id} class="slds-hint-parent">
+                                <td class="slds-size_1-of-5">
+                                    <div>
+                                        <lightning-input  value={item2.Reader__r.Name} read-only=true></lightning-input>
+                                    </div>
+                                </td>
+                                <td class="slds-size_1-of-5">
+                                    <div>
+                                        <lightning-input  value={item2.Book_Copy__r.Name} read-only=true></lightning-input>
+                                    </div>
+                                </td>
+                                <td class="slds-size_1-of-5">
+                                    <div>
+                                        <lightning-input value={item2.Issue_From__c} read-only=true></lightning-input>
+                                    </div>
+                                </td>
+                                <td class="slds-size_1-of-5">
+                                    <div>
+                                        <lightning-input value={item2.Issue_Till__c} read-only=true></lightning-input>
+                                    </div>
+                                </td>
+                                <td class="slds-size_1-of-5">
+                                    <div>
+                                        <template if:true={item2.Is_Returned__c}>
+                                            |Book is {item.Status__c}|
+                                        </template>
+                                        <template if:false={item2.Is_Returned__c}>
+                                            <lightning-radio-group
+                                                            name="actionButtons"
+                                                            options={buttonOptions}
+                                                            value={value2}
+                                                            onchange={updateIssueObj}
+                                                            type="button">
+                                            </lightning-radio-group>
+                                        </template>
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </lightning-card>
+            </template>           
+    </lightning-card>
+    <template if:false={item}>
+        No Books Issued.
+    </template>
+</template>

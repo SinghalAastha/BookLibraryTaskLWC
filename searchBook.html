@@ -1,0 +1,83 @@
+<template>
+   <template if:true={isNameClicked}>
+      <c-new-book-entry parentisbn={parentisbn} nameclicked={isNameClicked}></c-new-book-entry>
+   </template>
+   <template if:true={hideParent}>
+    <lightning-card title="Search Book by Name,ISBN or Author">
+      <div class="demo-only" style="padding:0.5rem;background:#0d255a">
+           <lightning-input type="search"
+            placeholder={placeHolder} 
+            value={searchValue}
+            onchange={handleChangesearch}>
+           </lightning-input> </div>
+
+           <div class="slds-col slds-size_1-of-3">
+              
+              <lightning-radio-group name="Criteria"
+                           label="Select search Criteria"
+                           options={options}
+                           value={radioValue}
+                           onchange={fetchRecord}
+                           type="button">
+                        </lightning-radio-group>
+                     </div>
+                  <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-top_small">
+                     <thead>
+                        <tr class="slds-line-height_reset">
+                           <th class="" scope="col">
+                              <div class="slds-truncate" title="Book Name">Name</div>
+                           </th>
+                           <th class="" scope="col">
+                              <div class="slds-truncate" title="ISBN">ISBN</div>
+                           </th>
+                           <th class="" scope="col">
+                              <div class="slds-truncate" title="Author">Author</div>
+                           </th>
+                           <th class="" scope="col">
+                              <div class="slds-truncate" title="Number of Available Copy">Number of Available Copy</div>
+                           </th>
+                           <th class="" scope="col">
+                               <div class="slds-truncate" title="Number of Issued Copy">Number of Issued Copy</div>
+                            </th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <template for:each={item} for:item="b">
+                           <tr key={item.id} class="slds-hint-parent">
+                              <td>
+                                 <div class="slds-truncate">
+                                    <lightning-formatted-phone value={b.Name} onclick={openComp3}></lightning-formatted-phone>
+                                </div>
+                              </td>
+                              <td>
+                                  <div class="slds-truncate">
+                                      <lightning-input  value={b.Isbn_Number__c} read-only=true></lightning-input>
+                                  </div>
+                              </td>
+                              <td>
+                                  <div class="slds-truncate">
+                                      <lightning-input  value={b.Author__c} read-only=true></lightning-input>
+                                  </div>
+                              </td>
+                              <td>
+                                  <div class="slds-truncate">
+                                      <lightning-input value={b.Number_of_Available_Books__c} read-only=true></lightning-input>
+                                  </div>
+                              </td>
+                              <td >
+                                  <div class="slds-truncate">
+                                      <lightning-input value={b.Number_of_Issued_Books__c} read-only=true></lightning-input>
+                                  </div>
+                              </td>
+                              <td >
+                                  <div class="slds-truncate">
+                                      <lightning-input value={b.Number_of_Books__c} read-only=true></lightning-input>
+                                  </div>
+                              </td>
+                          </tr>
+                        </template>
+                     </tbody>
+                  </table>              
+      </lightning-card>
+      </template>
+</template>

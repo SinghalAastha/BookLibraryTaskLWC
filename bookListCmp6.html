@@ -1,0 +1,40 @@
+<template>
+    <lightning-card title="Issued Books List">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-top_small">
+            <thead>
+               <tr class="slds-line-height_reset">
+                  <th class="" scope="col">
+                     <div class="slds-truncate" title="Book Name ">Book Name</div>
+                  </th>
+                  <th class="" scope="col">
+                     <div class="slds-truncate" title="Book Copy">Book Copy</div>
+                  </th>
+                  <th class="" scope="col">
+                     <div class="slds-truncate" title="Issued from">Issued from</div>
+                    </th>
+                    <th class="" scope="col">
+                       <div class="slds-truncate" title="Return Date">Return Date</div>
+                    </th>
+                 </tr>
+              </thead>
+              <tbody>
+               <template for:each={bdata} for:item="item">
+                  <tr class="slds-hint-parent" key={item.Id}>
+                     <td>
+                        <div class="slds-truncate">{item.Book__r.Name}</div>
+                     </td>
+                     <td>
+                      <div class="slds-truncate">{item.Book_Copy__r.Name}</div>
+                   </td>
+                   <td>
+                      <div class="slds-truncate">{item.Issue_From__c}</div>
+                   </td>
+                   <td>
+                     <div class="slds-truncate">{item.Issue_Till__c}</div>
+                  </td>
+                  </tr>
+               </template>
+            </tbody>
+         </table>
+    </lightning-card>
+</template>

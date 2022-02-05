@@ -1,0 +1,76 @@
+<template>
+    <lightning-card>
+        <h3 slot="title">
+            <lightning-icon icon-name="action:add_file" size="small" variant="inverse"></lightning-icon>
+            Enter New Book
+        </h3>
+        <div>
+        <lightning-input type="text" name="BookName" label="Enter Book Name" 
+        onchange={handleChange} value={BookName} required></lightning-input></div>
+        <div>
+        <lightning-input type="search" value={searchValue} label="Enter ISBN Number" 
+        read-only={mode} onchange={searchISBN} required></lightning-input></div>
+        <div>
+        <lightning-input type="text" value={AuthorName} label="Enter Author Name" 
+        name="AuthorName" onchange={handleChange}></lightning-input></div>
+        <div>
+        <lightning-input type="text" name="BookPrice" label="Enter Price" 
+        onchange={handleChange} value={BookPrice} ></lightning-input></div>
+        <div>
+        <lightning-input type="number" name="NumberOfBooks" label="Number of Books"
+        onchange={handleChange} value={NumberOfBooks} ></lightning-input></div>
+        <div>
+        <lightning-button label="Submit" title="Insert Book" variant="brand"
+         onclick={save} ></lightning-button></div>
+       <template if:true={isbnBook}>
+          <lightning-card>
+          <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-top_small">
+             <thead>
+                <tr class="slds-line-height_reset">
+                   <th class="" scope="col">
+                      <div class="slds-truncate" title="Book Name">Name
+                      </div>
+                   </th>
+                   <th class="" scope="col">
+                      <div class="slds-truncate" title="ISBN">ISBN</div>
+                     </th>
+                     <th class="" scope="col">
+                        <div class="slds-truncate" title="Price">Price</div>
+                     </th>
+                     <th class="" scope="col">
+                        <div class="slds-truncate" title="Author">Author</div>
+                     </th>
+                     <th class="" scope="col">
+                        <div class="slds-truncate" title="Select">Select</div>
+                     </th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <template for:each={isbnBook} for:item="item">
+                     <tr class="slds-hint-parent" key={item}>
+                        <td>
+                           <div class="slds-truncate">{item.Name}</div>
+                        </td>
+                        <td>
+                           <div class="slds-truncate">{item.Isbn_Number__c	}</div>
+                        </td>
+                        <td>
+                           <div class="slds-truncate">{item.Price__c}</div>
+                        </td>
+                        <td>
+                           <div class="slds-truncate">{item.Author__c}
+                           </div>
+                        </td>
+                        <td>
+                              <lightning-button-icon icon-name="action:approval" 
+                                 alternative-text="Select" 
+                                 class="slds-m-left_xx-small" title="Select" onclick={handleClick}></lightning-button-icon>
+                        </td>
+                     </tr>
+                  </template>
+               </tbody>
+            </table>
+         </lightning-card>
+      </template>
+   </lightning-card>
+</template>

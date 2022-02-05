@@ -1,0 +1,30 @@
+<template>
+    <div>
+        <lightning-card>
+            <lightning-tabset variant="default" active-tab-value={tab}>
+                <lightning-tab label="Search Book" title="Search Book" id="firstTab" value="firstTab" onactive={handleTab}>
+                    <c-search-book onissue={handleIssue} onshowdetails={tabInfo}></c-search-book>
+                </lightning-tab>
+
+                <lightning-tab label="Add Books" title="Add Books" id="secondTab" value="secondTab" onactive={handleTab}>
+                    <c-new-book-entry></c-new-book-entry>
+                </lightning-tab>
+
+                <lightning-tab label="Issue Book" title="Issue Book" id="thirdTab" value="thirdTab" onactive={handleTab}>
+                    <c-issue-details-cmp4 onmove={moveTab}></c-issue-details-cmp4>
+                </lightning-tab>
+
+                <lightning-tab label="Issued Books" title="Issued Books" id="fourthtab" value="fourthtab" onactive={handleTab}>
+                    <c-book-list-cmp6 onopen3={tabInfo}></c-book-list-cmp6>
+                </lightning-tab>
+                
+                <lightning-tab label="Book Info" title="Book Info" id="fifthTab" value="fifthTab" onactive={handleTab}>
+                    <c-issue-book-cmp3 book-id1={bookId} onissue={move}></c-issue-book-cmp3>
+                </lightning-tab>
+                <lightning-tab label="Readers Details" title="Reader Details" id="sixthTab" value="sixthTab" onactive={handleTab}>
+                    <c-show-customers-comp7></c-show-customers-comp7>
+                </lightning-tab>
+            </lightning-tabset>
+        </lightning-card>
+    </div>   
+</template>

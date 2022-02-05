@@ -1,0 +1,48 @@
+<template>
+    <lightning-card title="Readers Data">
+        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-top_small">
+            <thead>
+               <tr class="slds-line-height_reset">
+                  <th class="" scope="col">
+                     <div class="slds-truncate" title="Name">Name</div>
+                  </th>
+                  <th class="" scope="col">
+                     <div class="slds-truncate" title="Issued Books">Issued Books</div>
+                    </th>
+                    <th class="" scope="col">
+                       <div class="slds-truncate" title="Returned Books">Returned Books</div>
+                    </th>
+                    <th class="" scope="col">
+                       <div class="slds-truncate" title="Overdue Books">Overdue Books</div>
+                    </th>
+                 </tr>
+              </thead>
+              <tbody>
+                 <template for:each={rData} for:item="item">
+                    <tr class="slds-hint-parent" key={item.Id}>
+                       <td>
+                          <div class="slds-truncate">{item.Name}</div>
+                       </td>
+                       <td>
+                        <div class="slds-truncate">{item.Issued_Book}</div>
+                     </td>
+                     <td>
+                        <div class="slds-truncate">{item.Returned}</div>
+                     </td>
+                     <td>
+                        <div class="slds-truncate">
+                           <template for:each={item.bCopy} for:item="item1">
+                              <div key={item1.Id}>
+                                 <template if:false={item1.Is_Returned__c}>
+                                    {item1.Book_Copy__r.Name}
+                                 </template>
+                              </div>
+                           </template>
+                        </div>
+                     </td>
+                    </tr>
+                 </template>
+              </tbody>
+           </table>
+    </lightning-card>
+</template>

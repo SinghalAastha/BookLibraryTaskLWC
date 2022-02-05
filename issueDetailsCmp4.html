@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title="Issue Book">
+        <div>
+            <lightning-input type="number" value={bookToIssue} label="ISBN of Book" onchange={handleIsbn} required>
+            </lightning-input>
+        </div>
+        <div>
+            <lightning-input type="text" label="Reader Name" read-only={bookToIssue} onchange={handleChange}></lightning-input>
+        </div>
+        <div>
+            <lightning-input type="date" label="Tentative Date of Return" read-only={bookToIssue} onchange={handleReturn}></lightning-input>
+        </div>
+        <div>
+            <lightning-button label="Issue Book" slot="action" title="Insert Record" variant="brand" onclick={issue} disabled={bookToIssue}></lightning-button>
+        </div>
+    </lightning-card>
+</template>
